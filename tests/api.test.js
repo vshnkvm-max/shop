@@ -8,7 +8,7 @@ import { hashPassword } from '../lib/auth.js';
 import { insertTestFixtures } from './fixtures/store.js';
 
 let app,base,cookie,csrf;
-const temp=mkdtempSync(join(tmpdir(),'sloy-test-'));
+const temp=mkdtempSync(join(tmpdir(),'shop-test-'));
 const dbPath=join(temp,'test.db');
 const password='test-only-password-2026';
 async function request(path,{method='GET',body,auth=true,headers={}}={}) {

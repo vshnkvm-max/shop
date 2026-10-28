@@ -38,7 +38,7 @@ export function createApp({dbPath=process.env.DB_PATH || resolve(root,'.data/sho
   const orders=()=>db.prepare(`SELECT o.*,c.name AS customer_name,c.username,COALESCE(SUM(i.price*i.quantity),0) AS total,COALESCE(SUM(i.quantity),0) AS quantity FROM orders o JOIN customers c ON c.id=o.customer_id LEFT JOIN order_items i ON i.order_id=o.id GROUP BY o.id ORDER BY o.created_at DESC`).all().map(o=>({...o,items:db.prepare('SELECT * FROM order_items WHERE order_id=?').all(o.id)}));
   const ledger=()=>[
     ...db.prepare('SELECT * FROM transactions').all().map(t=>({...t,id:`t${t.id}`})),
-    ...db.prepare(`SELECT o.id,o.created_at,SUM(i.price*i.quantity) AS amount FROM orders o JOIN order_items i ON i.order_id=o.id WHERE o.status='completed' GROUP BY o.id`).all().map(o=>({...o,id:`o${o.id}`,type:'income',category:'Продажи',description:`Заказ #SL-${String(o.id).padStart(4,'0')}`}))
+    ...db.prepare(`SELECT o.id,o.created_at,SUM(i.price*i.quantity) AS amount FROM orders o JOIN order_items i ON i.order_id=o.id WHERE o.status='completed' GROUP BY o.id`).all().map(o=>({...o,id:`o${o.id}`,type:'income',category:'Продажи',description:`Заказ #${String(o.id).padStart(4,'0')}`}))
   ].sort((a,b)=>b.created_at.localeCompare(a.created_at));
   const bootstrap=()=>({
     products:products(),customers:customers(),orders:orders(),
@@ -156,5 +156,5 @@ function validateBanner(b) {
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
   const host=process.env.HOST||'127.0.0.1'; const port=Number(process.env.PORT||3000);
-  const {server}=createApp();server.listen(port,host,()=>console.log(`Слой · сервер запущен на ${host}:${port}`));
+  const {server}=createApp();server.listen(port,host,()=>console.log(`Сервер панели управления запущен на ${host}:${port}`));
 }

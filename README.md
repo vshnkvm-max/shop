@@ -1,4 +1,4 @@
-# Слой · панель управления магазином
+# Панель управления магазином
 
 Веб-панель для магазина обычных товаров: каталог, клиенты, заказы, управленческие финансы, модерация отзывов, условия реферальной программы, информация о магазине и баннеры. Интерфейс на русском, адаптивная вёрстка, поиск, фильтры и CSV-экспорт. Node.js 24+ и SQLite без внешних runtime-зависимостей и сборки.
 
@@ -24,8 +24,8 @@ npm test       # интеграционные тесты HTTP API с отдел�
 Опциональная проверка интерфейса в Chromium (временная БД, рабочие данные не меняются):
 
 ```bash
-npm install --prefix /tmp/sloy-browser --no-package-lock --no-audit --no-fund playwright
-PLAYWRIGHT_MODULE=/tmp/sloy-browser/node_modules/playwright/index.mjs npm run test:browser
+npm install --prefix /tmp/shop-browser --no-package-lock --no-audit --no-fund playwright
+PLAYWRIGHT_MODULE=/tmp/shop-browser/node_modules/playwright/index.mjs npm run test:browser
 ```
 
 По умолчанию браузер берётся из `/usr/bin/chromium`; другой исполняемый файл можно задать через `CHROMIUM_PATH`. Переменная `SCREENSHOT_DIR` позволяет сохранить снимки входа, каталога и мобильной версии. Playwright нужен только для этого дополнительного теста.

@@ -3,18 +3,18 @@ export function insertTestFixtures(db) {
   db.exec('BEGIN');
   try {
     const products = [
-      ['Наушники Nothing Headphone', 'SL-001', 'Электроника', 12990, 8100, 24, 'headphones', 'Беспроводные наушники с активным шумоподавлением.'],
-      ['Лампа настольная Form', 'SL-002', 'Для дома', 4590, 2300, 18, 'lamp', 'Мягкий свет и лаконичная форма для рабочего стола.'],
-      ['Рюкзак Everyday', 'SL-003', 'Аксессуары', 6900, 3500, 7, 'bag', 'Городской рюкзак с отделением для ноутбука.'],
-      ['Колонка Sound Mini', 'SL-004', 'Электроника', 3490, 1900, 32, 'speaker', 'Компактная беспроводная колонка.'],
-      ['Термокружка Daily', 'SL-005', 'Для дома', 1890, 800, 4, 'cup', 'Сохраняет тепло напитка до 6 часов.'],
-      ['Часы Analog', 'SL-006', 'Аксессуары', 8900, 4700, 0, 'watch', 'Классические часы с текстильным ремешком.'],
-      ['Органайзер Desk', 'SL-007', 'Для дома', 2490, 1200, 15, 'organizer', 'Порядок на столе, место для важных мелочей.'],
-      ['Шоппер Cotton', 'SL-008', 'Аксессуары', 990, 350, 48, 'tote', 'Плотный хлопок и удобные широкие ручки.'],
-      ['Наушники Air Buds', 'SL-009', 'Электроника', 5990, 2900, 11, 'headphones', 'Компактные наушники для каждого дня.'],
-      ['Лампа Arc', 'SL-010', 'Для дома', 7490, 4100, 6, 'lamp', 'Регулируемый свет для уютного вечера.'],
-      ['Рюкзак Weekend', 'SL-011', 'Аксессуары', 8490, 4400, 12, 'bag', 'Всё для небольшой поездки.'],
-      ['Кружка Studio', 'SL-012', 'Для дома', 1290, 500, 23, 'cup', 'Керамическая кружка с матовым покрытием.']
+      ['Наушники Nothing Headphone', 'SKU-001', 'Электроника', 12990, 8100, 24, 'headphones', 'Беспроводные наушники с активным шумоподавлением.'],
+      ['Лампа настольная Form', 'SKU-002', 'Для дома', 4590, 2300, 18, 'lamp', 'Мягкий свет и лаконичная форма для рабочего стола.'],
+      ['Рюкзак Everyday', 'SKU-003', 'Аксессуары', 6900, 3500, 7, 'bag', 'Городской рюкзак с отделением для ноутбука.'],
+      ['Колонка Sound Mini', 'SKU-004', 'Электроника', 3490, 1900, 32, 'speaker', 'Компактная беспроводная колонка.'],
+      ['Термокружка Daily', 'SKU-005', 'Для дома', 1890, 800, 4, 'cup', 'Сохраняет тепло напитка до 6 часов.'],
+      ['Часы Analog', 'SKU-006', 'Аксессуары', 8900, 4700, 0, 'watch', 'Классические часы с текстильным ремешком.'],
+      ['Органайзер Desk', 'SKU-007', 'Для дома', 2490, 1200, 15, 'organizer', 'Порядок на столе, место для важных мелочей.'],
+      ['Шоппер Cotton', 'SKU-008', 'Аксессуары', 990, 350, 48, 'tote', 'Плотный хлопок и удобные широкие ручки.'],
+      ['Наушники Air Buds', 'SKU-009', 'Электроника', 5990, 2900, 11, 'headphones', 'Компактные наушники для каждого дня.'],
+      ['Лампа Arc', 'SKU-010', 'Для дома', 7490, 4100, 6, 'lamp', 'Регулируемый свет для уютного вечера.'],
+      ['Рюкзак Weekend', 'SKU-011', 'Аксессуары', 8490, 4400, 12, 'bag', 'Всё для небольшой поездки.'],
+      ['Кружка Studio', 'SKU-012', 'Для дома', 1290, 500, 23, 'cup', 'Керамическая кружка с матовым покрытием.']
     ];
     const insert = db.prepare('INSERT INTO products (name,sku,category,price,cost,stock,image,description) VALUES (?,?,?,?,?,?,?,?)');
     for (const row of products) insert.run(...row);
@@ -26,7 +26,7 @@ export function insertTestFixtures(db) {
     ];
     const date = days => new Date(Date.now() - days * 86400000).toISOString();
     const customer = db.prepare('INSERT INTO customers (name,username,email,city,joined,referral_code) VALUES (?,?,?,?,?,?)');
-    people.forEach((p,i) => customer.run(...p, date(30+i*4), `SLOY${String(i+1).padStart(3,'0')}`));
+    people.forEach((p,i) => customer.run(...p, date(30+i*4), `REF${String(i+1).padStart(3,'0')}`));
     const order = db.prepare('INSERT INTO orders (customer_id,status,delivery,address,created_at) VALUES (?,?,?,?,?)');
     const item = db.prepare('INSERT INTO order_items (order_id,product_id,name,quantity,price,cost) VALUES (?,?,?,?,?,?)');
     const statuses = ['new','new','accepted','completed','completed','cancelled','completed','accepted','completed','completed','completed','completed'];
